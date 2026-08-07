@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>CrispNote</title>
+</head>
+<body style="font-family: sans-serif; text-align: center; padding-top: 4em;">
+  <!--
+    OneDrive(Microsoft Entra)の認可後にリダイレクトされてくるページ。
+    アプリ本体(ポップアップを開いた側)へクエリ文字列をそのまま渡して自分を閉じる。
+    Dart側の受け取りは lib/cloud/one_drive_authorizer_web.dart。
+
+    このURL(例: http://localhost:7357/oauth/onedrive_callback.html)を、Azureの
+    アプリ登録に「シングルページ アプリケーション(SPA)」のリダイレクトURIとして
+    登録しておくこと。
+  -->
+  <h2 id="message">サインインを処理しています…</h2>
+  <script>
+    (function () {
+      var payload = window.location.search.replace(/^\?/, '');
+      if (window.opener && !window.opener.closed) {
+        // 送信先は自分と同じオリジン(アプリ本体)に限定する。
+        window.opener.postMessage(payload, window.location.origin);
+        window.close();
+      } else {
+        // ポップアップではなく直接開かれた場合(想定外)。
+        document.getElementById('message').textContent =
+          'このページを閉じて、CrispNoteからやり直してください。';
+      }
+    })();
+  </script>
+</body>
+</html>
