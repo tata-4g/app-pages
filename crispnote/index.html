@@ -46,7 +46,22 @@
   li { margin-bottom: 0.5em; }
   a { color: #1a73e8; }
   footer { margin-top: 3em; font-size: 0.85rem; color: #666; }
-  .lang-switch { font-size: 0.9rem; margin-bottom: 1.5em; }
+  /* 言語切替。ブラウザ言語による自動振り分けは必ず外れる場合がある
+     (英語のPCで日本語を読みたい、共用PC等)ので、手で戻せる導線を目立つ位置に置く。
+     選択中は緑地に白文字(コントラスト5.1:1)。 */
+  .lang-switch { display: flex; justify-content: flex-end; margin-bottom: 1.5em; }
+  .lang-switch > * {
+    font-size: 0.85rem;
+    padding: 0.35em 0.9em;
+    border: 1px solid #1e7d4f;
+    line-height: 1.4;
+    text-decoration: none;
+  }
+  .lang-switch > :first-child { border-radius: 6px 0 0 6px; }
+  .lang-switch > :last-child { border-radius: 0 6px 6px 0; border-left: none; }
+  .lang-switch .current { background: #1e7d4f; color: #fff; font-weight: bold; }
+  .lang-switch a { color: #1e7d4f; background: #fff; }
+  .lang-switch a:hover { background: #eaf4ee; }
   .note { font-size: 0.9rem; color: #555; }
   .cta {
     display: inline-block;
@@ -60,7 +75,10 @@
 </style>
 </head>
 <body>
-<p class="lang-switch">日本語 / <a href="en/index.html">English</a></p>
+<nav class="lang-switch" aria-label="言語 / Language">
+  <span class="current">日本語</span>
+  <a href="en/index.html">English</a>
+</nav>
 <h1>CrispNote</h1>
 <p class="tagline">メモ・ノートを展開したまま並べて見られる、プライバシー配慮のノートアプリ</p>
 <p class="tagline">by Craftopia</p>

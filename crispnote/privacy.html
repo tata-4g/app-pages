@@ -42,11 +42,27 @@
   table { border-collapse: collapse; width: 100%; margin: 1em 0; }
   th, td { border: 1px solid #ddd; padding: 8px 10px; text-align: left; font-size: 0.95rem; }
   th { background: #f3f8f5; }
-  .lang-switch { font-size: 0.9rem; margin-bottom: 1.5em; }
+  /* 見た目の意図は index.html のコメントを参照。 */
+  .lang-switch { display: flex; justify-content: flex-end; margin-bottom: 1.5em; }
+  .lang-switch > * {
+    font-size: 0.85rem;
+    padding: 0.35em 0.9em;
+    border: 1px solid #1e7d4f;
+    line-height: 1.4;
+    text-decoration: none;
+  }
+  .lang-switch > :first-child { border-radius: 6px 0 0 6px; }
+  .lang-switch > :last-child { border-radius: 0 6px 6px 0; border-left: none; }
+  .lang-switch .current { background: #1e7d4f; color: #fff; font-weight: bold; }
+  .lang-switch a { color: #1e7d4f; background: #fff; }
+  .lang-switch a:hover { background: #eaf4ee; }
 </style>
 </head>
 <body>
-<p class="lang-switch">日本語 / <a href="en/privacy.html">English</a></p>
+<nav class="lang-switch" aria-label="言語 / Language">
+  <span class="current">日本語</span>
+  <a href="en/privacy.html">English</a>
+</nav>
 <h1>CrispNote プライバシーポリシー</h1>
 <p class="updated">最終更新日: 2026年7月20日</p>
 
