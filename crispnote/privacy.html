@@ -11,7 +11,7 @@
 // 振り分けの意図と仕組みは index.html のコメントを参照。
 // ストアから直接ここへ来る人がいるので、トップページと同じ処理を持たせる。
 (function () {
-  var KEY = 'crispnote-lang';
+  var KEY = 'craftopia-lang';
   var wantsJa = location.search.indexOf('lang=ja') !== -1;
   try {
     if (wantsJa) sessionStorage.setItem(KEY, 'ja');
