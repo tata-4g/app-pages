@@ -1,0 +1,247 @@
+/* Craftopiaトップページ(日本語版 index.html / 英語版 en/index.html)の共通スタイル。
+   両方から読むので、片方だけ直して見た目がずれることが起きない。
+
+   見た目の方針はアプリ本体(CrispNote)と揃えてある:
+   - フラットデザイン(影・グラデーション・光沢を使わず、区切り線と余白でまとまりを作る)
+   - 可読性最優先(本文16px以上、文字と背景のコントラストはWCAG AA=4.5:1以上)
+   - 緑基調(#1e7d4f。白文字を載せて5.1:1)
+   ダークモードは端末の設定に追従する(色だけ差し替え、構造は共通)。 */
+
+:root {
+  --green: #1e7d4f;
+  --green-strong: #16613d;
+  --green-tint: #eaf4ee;
+  --on-green: #ffffff;
+  --bg: #f7f9f7;
+  --surface: #ffffff;
+  --line: #dfe5e0;
+  --ink: #1b1b1b;
+  --muted: #55605a;
+  --link: #1a73e8;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* 濃い地色の上では #1e7d4f は沈んで読めないので、文字・線に使う緑は明るい方へ差し替える
+       (帯の背景色だけは濃い緑のまま。白文字を載せるため)。 */
+    --green: #6fd39b;
+    --green-strong: #8fe0b3;
+    --green-tint: #1d2a23;
+    --bg: #121212;
+    --surface: #1c1e1c;
+    --line: #2f342f;
+    --ink: #f2f2ed;
+    --muted: #a9b3ac;
+    --link: #7fb2ff;
+    --band: #17603c;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 0 20px 64px;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+.wrap { max-width: 760px; margin: 0 auto; }
+
+a { color: var(--link); }
+
+/* --- 言語切替 -------------------------------------------------------------
+   ブラウザ言語による自動振り分けは必ず外れる場合がある(英語のPCで日本語を読みたい、
+   共用PC等)ので、手で戻せる導線を最上部の目立つ位置に置く。 */
+.lang-switch {
+  display: flex;
+  justify-content: flex-end;
+  padding: 20px 0 24px;
+}
+.lang-switch > * {
+  font-size: 0.85rem;
+  padding: 0.35em 0.9em;
+  border: 1px solid var(--green);
+  line-height: 1.4;
+  text-decoration: none;
+}
+.lang-switch > :first-child { border-radius: 6px 0 0 6px; }
+.lang-switch > :last-child { border-radius: 0 6px 6px 0; border-left: none; }
+.lang-switch .current { background: var(--green); color: var(--on-green); font-weight: bold; }
+.lang-switch a { color: var(--green); background: var(--surface); }
+.lang-switch a:hover { background: var(--green-tint); }
+
+@media (prefers-color-scheme: dark) {
+  /* 明るい緑の地に白文字だと沈むので、選択中の帯だけ文字を地色側にする。 */
+  .lang-switch .current { color: var(--bg); }
+}
+
+/* --- ヘッダー(緑の帯) ---------------------------------------------------- */
+.hero {
+  background: var(--green);
+  border-radius: 18px;
+  padding: 40px 28px;
+  text-align: center;
+  color: var(--on-green);
+}
+@media (prefers-color-scheme: dark) {
+  .hero { background: var(--band); }
+}
+
+.mark {
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 18px;
+  border-radius: 18px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.mark svg { width: 44px; height: 44px; display: block; }
+
+.hero h1 {
+  margin: 0;
+  font-size: 2.1rem;
+  letter-spacing: 0.02em;
+  line-height: 1.3;
+}
+.hero .tagline {
+  margin: 8px 0 0;
+  font-size: 1.05rem;
+  /* 帯の上の文字はすべて白。薄くすると4.5:1を割るので透明度は使わない。 */
+  color: var(--on-green);
+}
+
+.lede {
+  margin: 28px 0 0;
+  color: var(--muted);
+}
+
+/* --- 見出し --------------------------------------------------------------- */
+h2 {
+  font-size: 1.15rem;
+  color: var(--green);
+  margin: 48px 0 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--line);
+}
+
+/* --- アプリのカード -------------------------------------------------------- */
+.apps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.card {
+  position: relative;
+  /* 縦にflexにしておくと、説明文の長さが違っても "詳しく見る" が下端で揃う
+     (margin-top: auto で下へ寄せている)。 */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 22px 20px;
+  transition: border-color 0.15s, background-color 0.15s;
+}
+.card:hover { border-color: var(--green); background: var(--green-tint); }
+.card:focus-within { border-color: var(--green); }
+
+.card img {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  display: block;
+}
+.card h3 {
+  margin: 14px 0 6px;
+  font-size: 1.15rem;
+  line-height: 1.4;
+}
+.card p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  list-style: none;
+  margin: 14px 0 0;
+  padding: 0;
+}
+.badges li {
+  font-size: 0.75rem;
+  line-height: 1.6;
+  padding: 0.1em 0.7em;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--muted);
+  background: var(--surface);
+}
+
+.card .more {
+  display: inline-block;
+  margin-top: auto;
+  padding-top: 16px;
+  color: var(--green);
+  font-weight: bold;
+  font-size: 0.95rem;
+  text-decoration: none;
+}
+.card .more:hover { text-decoration: underline; }
+/* カードのどこを押しても開けるようにリンクを面いっぱいに広げる
+   (見た目のリンクは "詳しく見る" のまま)。 */
+.card .more::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+}
+.card .more:focus-visible::after { outline: 2px solid var(--green); outline-offset: 2px; }
+
+/* --- Craftopiaについて ----------------------------------------------------- */
+.facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 16px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.facts li {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--green);
+  border-radius: 0 12px 12px 0;
+  padding: 16px 18px;
+}
+.facts strong {
+  display: block;
+  font-size: 0.98rem;
+  margin-bottom: 4px;
+}
+.facts span {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+/* --- フッター -------------------------------------------------------------- */
+footer {
+  margin-top: 48px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+  font-size: 0.85rem;
+  color: var(--muted);
+}

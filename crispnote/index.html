@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>CrispNote</title>
+<link rel="icon" href="../assets/icon-crispnote.png">
 <link rel="alternate" hreflang="ja" href="https://tata-4g.github.io/app-pages/crispnote/">
 <link rel="alternate" hreflang="en" href="https://tata-4g.github.io/app-pages/crispnote/en/">
 <link rel="alternate" hreflang="x-default" href="https://tata-4g.github.io/app-pages/crispnote/">
@@ -43,6 +44,15 @@
   }
   h1 { font-size: 1.8rem; color: #1e7d4f; margin-bottom: 0.2em; }
   .tagline { color: #555; margin-top: 0; }
+  /* アイコンは角丸が焼き込まれているので、CSSでborder-radiusを足さないこと
+     (二重にかかって角が削れる)。アイコンはトップページと共有(assets/)。
+     ⚠️ アイコンの横に置くのはタイトルまで。説明文まで入れると折り返しで
+     縦に伸び、アイコンだけが上に取り残されて不格好になる(説明は下へ出す)。 */
+  .app-head { display: flex; align-items: center; gap: 16px; }
+  .app-head img { width: 72px; height: 72px; flex-shrink: 0; }
+  .app-head h1 { margin: 0 0 0.1em; }
+  .app-head .tagline { margin: 0; }
+  .lead { margin-top: 1.2em; }
   h2 { font-size: 1.15rem; color: #1e7d4f; margin-top: 2em; }
   ul { padding-left: 1.3em; }
   li { margin-bottom: 0.5em; }
@@ -81,9 +91,14 @@
   <span class="current">日本語</span>
   <a href="en/index.html">English</a>
 </nav>
-<h1>CrispNote</h1>
-<p class="tagline">メモ・ノートを展開したまま並べて見られる、プライバシー配慮のノートアプリ</p>
-<p class="tagline">by Craftopia</p>
+<header class="app-head">
+  <img src="../assets/icon-crispnote.png" alt="CrispNote のアイコン" width="72" height="72">
+  <div>
+    <h1>CrispNote</h1>
+    <p class="tagline">by Craftopia</p>
+  </div>
+</header>
+<p class="tagline lead">メモ・ノートを展開したまま並べて見られる、プライバシー配慮のノートアプリ</p>
 
 <p>
 CrispNoteは、Google Keepのように「チェックリスト形式のメモ」と「自由記述のノート」を

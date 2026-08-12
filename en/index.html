@@ -3,59 +3,88 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Craftopia</title>
+<title>Craftopia — Apps by an independent developer</title>
+<meta name="description" content="Craftopia is a one-person app studio. Public pages for CrispNote, a privacy-conscious note app, and Simple BLS, a basic life support helper.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Craftopia">
+<meta property="og:description" content="No ads, and your data stays with you. Apps built by an independent developer.">
+<meta property="og:url" content="https://tata-4g.github.io/app-pages/en/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231e7d4f'/%3E%3Cpath d='M45 22A15 15 0 1 0 45 42' fill='none' stroke='%23fff' stroke-width='6' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="alternate" hreflang="ja" href="https://tata-4g.github.io/app-pages/">
 <link rel="alternate" hreflang="en" href="https://tata-4g.github.io/app-pages/en/">
 <link rel="alternate" hreflang="x-default" href="https://tata-4g.github.io/app-pages/">
-<style>
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
-    max-width: 640px;
-    margin: 48px auto;
-    padding: 0 20px;
-    line-height: 1.7;
-    color: #222;
-  }
-  h1 { font-size: 1.4rem; }
-  ul { padding-left: 1.2em; }
-  li { margin-bottom: 0.9em; }
-  .note { color: #555; font-size: 0.9rem; }
-  a { color: #1a73e8; }
-  footer { margin-top: 3em; font-size: 0.85rem; color: #666; }
-  /* 見た目の意図は ../index.html のコメントを参照。 */
-  .lang-switch { display: flex; justify-content: flex-end; margin-bottom: 1.5em; }
-  .lang-switch > * {
-    font-size: 0.85rem;
-    padding: 0.35em 0.9em;
-    border: 1px solid #1e7d4f;
-    line-height: 1.4;
-    text-decoration: none;
-  }
-  .lang-switch > :first-child { border-radius: 6px 0 0 6px; }
-  .lang-switch > :last-child { border-radius: 0 6px 6px 0; border-left: none; }
-  .lang-switch .current { background: #1e7d4f; color: #fff; font-weight: bold; }
-  .lang-switch a { color: #1e7d4f; background: #fff; }
-  .lang-switch a:hover { background: #eaf4ee; }
-</style>
+<link rel="stylesheet" href="../assets/craftopia.css">
 </head>
 <body>
+<div class="wrap">
+
 <!-- ⚠️ ?lang=ja は必須。付けないと日本語ページの振り分けJSがここへ引き戻す。 -->
 <nav class="lang-switch" aria-label="Language / 言語">
   <a href="../index.html?lang=ja">日本語</a>
   <span class="current">English</span>
 </nav>
-<h1>Craftopia</h1>
-<p>Public pages — privacy policies and app overviews — for the apps I build as an independent developer.</p>
-<ul>
-  <li>
-    <a href="../crispnote/en/">CrispNote</a><br>
-    <span class="note">A privacy-conscious note app where checklists and notes stay laid out side by side</span>
+
+<header class="hero">
+  <div class="mark">
+    <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+      <path d="M45 22A15 15 0 1 0 45 42" fill="none" stroke="#1e7d4f" stroke-width="7" stroke-linecap="round"/>
+    </svg>
+  </div>
+  <h1>Craftopia</h1>
+  <p class="tagline">Everyday tools, built by one person.</p>
+</header>
+
+<p class="lede">
+No ads, and whatever you write stays as close to your own devices and accounts as it can.
+This page collects the overviews and privacy policies for each app.
+</p>
+
+<h2>Apps</h2>
+<ul class="apps">
+  <li class="card">
+    <img src="../assets/icon-crispnote.png" alt="CrispNote icon" width="56" height="56">
+    <h3>CrispNote</h3>
+    <p>A note app where checklists and notes stay laid out side by side. Notes sync straight to your own Google Drive or OneDrive.</p>
+    <ul class="badges">
+      <li>Browser</li>
+      <li>Windows</li>
+      <li>Android (coming soon)</li>
+    </ul>
+    <a class="more" href="../crispnote/en/">Learn more →</a>
   </li>
-  <li>
-    <a href="https://tata-4g.github.io/simple-bls/">Simple BLS</a><br>
-    <span class="note">Step-by-step guidance and record keeping for basic life support (BLS). Japanese only.</span>
+  <li class="card">
+    <img src="../assets/icon-simple-bls.png" alt="Simple BLS icon" width="56" height="56">
+    <h3>Simple BLS</h3>
+    <p>Step-by-step guidance for basic life support (BLS/CPR): a compression rhythm tone, voice prompts, and one-tap emergency calling. Japanese only.</p>
+    <ul class="badges">
+      <li>Android</li>
+      <li>Reviewed by a physician</li>
+    </ul>
+    <a class="more" href="https://tata-4g.github.io/simple-bls/" rel="noopener">Learn more →</a>
   </li>
 </ul>
-<footer>Contact: <a href="mailto:anesapp.support@gmail.com">anesapp.support@gmail.com</a></footer>
+
+<h2>About Craftopia</h2>
+<ul class="facts">
+  <li>
+    <strong>No ads</strong>
+    <span>The apps show no advertising. Development is supported by optional donations.</span>
+  </li>
+  <li>
+    <strong>Your data stays yours</strong>
+    <span>There is no developer-run server. If you turn on sync, it goes to your own cloud account.</span>
+  </li>
+  <li>
+    <strong>Independent</strong>
+    <span>Designed and built by one person, so feedback and bug reports reach me directly.</span>
+  </li>
+</ul>
+
+<footer>
+  Contact: <a href="mailto:anesapp.support@gmail.com">anesapp.support@gmail.com</a><br>
+  © Craftopia
+</footer>
+
+</div>
 </body>
 </html>
