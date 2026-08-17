@@ -181,6 +181,8 @@ Windows版は<a href="https://apps.microsoft.com/detail/9NJP7X574FLF">Microsoft 
 (function () {
   var PADDLE_TOKEN = 'live_94fcd0dbf76ba1e90ecca1c1c6f';
   var PRICE_ID = 'pri_01m08aephp03nzkffexphs6q8z';
+  // ⚠️ 絶対URLで渡すこと。相対パスだと決済のオーバーレイから戻れない。
+  var SUCCESS_URL = 'https://tata-4g.github.io/app-pages/crispnote/thanks.html';
   var ready = false;
   try {
     Paddle.Initialize({ token: PADDLE_TOKEN });
@@ -196,7 +198,13 @@ Windows版は<a href="https://apps.microsoft.com/detail/9NJP7X574FLF">Microsoft 
       if (!ready) { throw new Error('paddle not initialized'); }
       Paddle.Checkout.open({
         items: [{ priceId: PRICE_ID, quantity: 1 }],
-        settings: { locale: locale }
+        settings: {
+          locale: locale,
+          // ⚠️ 決済直後は**何も起きない**のが一番の不満点になる(キーの発行が
+          // 手作業で、その場では渡せないため)。完了ページへ送り、
+          // 「1営業日以内にメールで届く」ことを必ず伝える。
+          successUrl: SUCCESS_URL
+        }
       });
     } catch (e) {
       var fallback = document.getElementById('buy-fallback');

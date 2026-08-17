@@ -152,6 +152,8 @@ or email <a href="mailto:anesapp.support@gmail.com">anesapp.support@gmail.com</a
 (function () {
   var PADDLE_TOKEN = 'live_94fcd0dbf76ba1e90ecca1c1c6f';
   var PRICE_ID = 'pri_01m08aephp03nzkffexphs6q8z';
+  // Must be absolute: a relative path cannot be resolved from the checkout overlay.
+  var SUCCESS_URL = 'https://tata-4g.github.io/app-pages/crispnote/en/thanks.html';
   var ready = false;
   try {
     Paddle.Initialize({ token: PADDLE_TOKEN });
@@ -167,7 +169,13 @@ or email <a href="mailto:anesapp.support@gmail.com">anesapp.support@gmail.com</a
       if (!ready) { throw new Error('paddle not initialized'); }
       Paddle.Checkout.open({
         items: [{ priceId: PRICE_ID, quantity: 1 }],
-        settings: { locale: locale }
+        settings: {
+          locale: locale,
+          // Nothing visible happens right after payment (keys are issued by hand),
+          // which is the biggest source of doubt. Send buyers to a page that says
+          // the key arrives by email within one business day.
+          successUrl: SUCCESS_URL
+        }
       });
     } catch (e) {
       var fallback = document.getElementById('buy-fallback');
