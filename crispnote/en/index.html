@@ -172,7 +172,25 @@ or email <a href="mailto:anesapp.support@gmail.com">anesapp.support@gmail.com</a
   var SUCCESS_URL = 'https://craftopiaapps.com/crispnote/en/thanks.html';
   var ready = false;
   try {
-    Paddle.Initialize({ token: PADDLE_TOKEN });
+    Paddle.Initialize({
+      token: PADDLE_TOKEN,
+      // ⚠️ 決済が終わった瞬間に取引IDを控える。完了ページはこれを使って
+      // ライセンスキーをその場で表示する(メールが迷惑メールに入るため、
+      // 2026-08-27。メールは残してあるが、それだけに頼らない)。
+      // ⚠️ successUrlに取引IDが付く保証はPaddleの文書に無いので、
+      // documentedなこのコールバックで取る。sessionStorageは同一オリジンなので
+      // 完了ページから読める。
+      eventCallback: function (ev) {
+        if (ev && ev.name === 'checkout.completed') {
+          try {
+            var id = ev.data && (ev.data.transaction_id || ev.data.id);
+            if (id) sessionStorage.setItem('crispnote-txn', id);
+          } catch (e) {
+            // プライベートモード等で保存できなくても、メールで届くので致命ではない。
+          }
+        }
+      },
+    });
     ready = true;
   } catch (e) {
     // Fall through: the button shows a contact message when pressed.

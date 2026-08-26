@@ -44,14 +44,38 @@
   }
   footer { margin-top: 3em; font-size: 0.85rem; color: #666; }
 </style>
+
+<style>
+  /* 購入直後に出すライセンスキーの枠。⚠️ キーは折り返して全体が見えること
+     (1行で横に溢れると、選択してコピーするのが難しくなる)。 */
+  #key-box { border: 1px solid #cfcfc7; border-radius: 8px; padding: 16px; margin: 24px 0; }
+  #key-box h2 { margin-top: 0; }
+  #key-value {
+    width: 100%; min-height: 6.5em; padding: 10px; box-sizing: border-box;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 14px; line-height: 1.5; word-break: break-all; resize: vertical;
+  }
+  #key-copy { margin-top: 10px; }
+</style>
 </head>
 <body>
 <h1>Thank you for your purchase</h1>
 
 <div class="panel">
-<strong>Your licence key is on its way by email.</strong><br>
-It goes to the address you entered at checkout and <strong>arrives within seconds</strong>.
-It is not shown on this page, so please check your inbox.
+<strong>Your licence key is shown below.</strong><br>
+The same key is also emailed to the address you entered at checkout.
+<strong>That email can land in your spam folder</strong>, so it is worth
+saving the key from this page.
+</div>
+
+
+<div class="panel" id="key-box" hidden>
+<h2>Your licence key</h2>
+<p id="key-status">Issuing your key. This takes a few seconds...</p>
+<textarea id="key-value" readonly spellcheck="false" aria-label="Licence key"></textarea>
+<p><button type="button" id="key-copy" data-done="Copied" hidden>Copy</button></p>
+<p class="note">The same key is on its way by email. <strong>It can land in your spam folder</strong>,
+so it is worth saving it from this page.</p>
 </div>
 
 <h2>You can keep working in the meantime</h2>
@@ -76,5 +100,74 @@ It arrives separately from the licence key email.
 </p>
 
 <footer><a href="./">CrispNote</a> / <a href="privacy.html">Privacy policy</a> / <a href="../../en/">Craftopia</a></footer>
+
+<!-- ⚠️ 購入直後にライセンスキーをこの場で表示する(2026-08-27に追加)。
+     メールだけに頼っていたら、最初の実購入でOutlookの迷惑メールに入った
+     (認証は全部passで、弾いたのはコンテンツと評判のフィルタ)。
+     ⚠️ メールの送信はやめないこと——後から見返せる利点があるので二本立てにする。
+     取引IDは購入ページの checkout.completed コールバックが sessionStorage に置く。
+     Workerが発行を終えるまで数秒かかるので、少し待って何度か取りに行く。 -->
+<script>
+(function () {
+  var ENDPOINT = 'https://crispnote-license.crispnote-license-worker.workers.dev/key';
+  var box = document.getElementById('key-box');
+  var out = document.getElementById('key-value');
+  var msg = document.getElementById('key-status');
+  var copy = document.getElementById('key-copy');
+  if (!box || !out || !msg) return;
+
+  var txn = null;
+  try {
+    txn = sessionStorage.getItem('crispnote-txn');
+  } catch (e) {
+    // 保存できていなければメールを見てもらう(既定の案内のまま)。
+  }
+  // 保険。Paddleがリダイレクト先に付けることがあるが、公式には未記載。
+  if (!txn) txn = new URLSearchParams(location.search).get('_ptxn');
+  if (!txn) return;
+
+  box.hidden = false;
+
+  // ⚠️ 諦めるまで待つこと。Workerはwebhookを受けてから発行するので、
+  // 完了ページの表示より少し遅れて用意される。
+  var tries = 0;
+  var MAX = 20;      // 20回 × 3秒 = 最大60秒
+  var WAIT = 3000;
+
+  function attempt() {
+    tries++;
+    fetch(ENDPOINT + '?txn=' + encodeURIComponent(txn))
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (data) {
+        if (data && data.license) {
+          out.value = data.license;
+          msg.hidden = true;
+          if (copy) copy.hidden = false;
+          return;
+        }
+        if (tries < MAX) { setTimeout(attempt, WAIT); return; }
+        box.hidden = true;   // 出せないときは黙って引っ込め、メールの案内に委ねる
+      })
+      .catch(function () {
+        if (tries < MAX) { setTimeout(attempt, WAIT); return; }
+        box.hidden = true;
+      });
+  }
+  attempt();
+
+  if (copy) {
+    copy.addEventListener('click', function () {
+      out.select();
+      try {
+        navigator.clipboard.writeText(out.value);
+        copy.textContent = copy.getAttribute('data-done');
+      } catch (e) {
+        document.execCommand('copy');
+        copy.textContent = copy.getAttribute('data-done');
+      }
+    });
+  }
+})();
+</script>
 </body>
 </html>
