@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CrispView Privacy Policy</title>
+<link rel="alternate" hreflang="ja" href="https://craftopiaapps.com/crispview/privacy.html">
+<link rel="alternate" hreflang="en" href="https://craftopiaapps.com/crispview/en/privacy.html">
+<link rel="alternate" hreflang="x-default" href="https://craftopiaapps.com/crispview/privacy.html">
+<style>
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    max-width: 680px;
+    margin: 48px auto;
+    padding: 0 20px;
+    line-height: 1.8;
+    color: #1b1b1b;
+  }
+  h1 { font-size: 1.5rem; color: #1e7d4f; }
+  h2 { font-size: 1.1rem; color: #1e7d4f; margin-top: 2em; }
+  a { color: #1a73e8; }
+  .updated { color: #666; font-size: 0.9rem; }
+  footer { margin-top: 3em; font-size: 0.85rem; color: #666; }
+  table { border-collapse: collapse; width: 100%; margin: 1em 0; }
+  th, td { border: 1px solid #ddd; padding: 8px 10px; text-align: left; font-size: 0.95rem; }
+  th { background: #f3f8f5; }
+  code { background: #f3f8f5; padding: 0.1em 0.35em; border-radius: 3px; font-size: 0.9em; }
+  .lang-switch { display: flex; justify-content: flex-end; margin-bottom: 1.5em; }
+  .lang-switch > * {
+    font-size: 0.85rem;
+    padding: 0.35em 0.9em;
+    border: 1px solid #1e7d4f;
+    line-height: 1.4;
+    text-decoration: none;
+  }
+  .lang-switch > :first-child { border-radius: 6px 0 0 6px; }
+  .lang-switch > :last-child { border-radius: 0 6px 6px 0; border-left: none; }
+  .lang-switch .current { background: #1e7d4f; color: #fff; font-weight: bold; }
+  .lang-switch a { color: #1e7d4f; background: #fff; }
+  .lang-switch a:hover { background: #eaf4ee; }
+</style>
+</head>
+<body>
+<nav class="lang-switch" aria-label="Language">
+  <a href="../privacy.html?lang=ja">日本語</a>
+  <span class="current">English</span>
+</nav>
+<h1>CrispView Privacy Policy</h1>
+<p class="updated">Last updated: September 5, 2026</p>
+
+<p>
+CrispView ("the app") is made by Craftopia ("the developer"), an independent developer.
+It shows the files in your Microsoft OneDrive as a timeline, grouped by date.
+This policy explains what information the app handles.
+</p>
+
+<h2>No server of our own</h2>
+<p>
+The developer does not run a server. Your files travel
+<strong>directly between your device and Microsoft OneDrive</strong> so that the app can
+display them; they never pass through the developer. The developer cannot see or
+retrieve the contents of your files.
+</p>
+
+<h2>Permissions the app asks OneDrive for</h2>
+<table>
+<tr><th>Scope</th><th>What it is used for</th></tr>
+<tr>
+  <td><code>Files.ReadWrite</code></td>
+  <td>
+    To list your files, fetch thumbnails and file contents, and to rename, move, delete,
+    upload and create share links from inside the app.
+    <strong>The whole point of the app is to show every kind of file in date order
+    regardless of which folder it sits in</strong>, so a scope limited to one folder
+    cannot do the job.
+  </td>
+</tr>
+<tr>
+  <td><code>Files.ReadWrite.AppFolder</code></td>
+  <td>
+    To store the tags, albums, pins, corrected dates, hidden-folder settings and purchase
+    record you create in an <strong>app-specific folder</strong> inside your own OneDrive,
+    so that the same settings are available on your other devices.
+  </td>
+</tr>
+<tr>
+  <td><code>offline_access</code></td>
+  <td>So that you do not have to sign in again every time you open the app.</td>
+</tr>
+</table>
+<p>
+<strong>The app does not ask for access to files other people have shared with you
+(<code>Files.ReadWrite.All</code>).</strong>
+Microsoft's own privacy policy also applies to your use of a Microsoft account
+(<a href="https://privacy.microsoft.com/en-us/privacystatement">Microsoft Privacy Statement</a>).
+</p>
+
+<h2>What is stored on your device</h2>
+<table>
+<tr><th>Information</th><th>How it is handled</th></tr>
+<tr>
+  <td>A file index (name, date, size, extension, and location in OneDrive)</td>
+  <td>
+    A local copy so the list works offline and does not need a network round trip every
+    time. It is stored only in a database on your device and is never sent to the developer.
+  </td>
+</tr>
+<tr>
+  <td>Thumbnail images</td>
+  <td>Cached on your device only, to make the list render quickly.</td>
+</tr>
+<tr>
+  <td>Files you chose with "Make available offline"</td>
+  <td>Only the files you pick are stored on the device. You can remove them at any time from inside the app.</td>
+</tr>
+<tr>
+  <td>Microsoft account sign-in tokens</td>
+  <td>Held securely on your device and used only to connect to OneDrive. They are never sent to the developer.</td>
+</tr>
+<tr>
+  <td>The password set on hidden folders</td>
+  <td>
+    Stored on your device only, in a form that cannot be reversed (a hash).
+    <strong>This feature is meant to keep folders out of sight of someone next to you;
+    it does not encrypt the files themselves.</strong>
+  </td>
+</tr>
+</table>
+
+<h2>Browsing folders on this device</h2>
+<p>
+Separately from OneDrive, the app can show folders on this device in the same way.
+It can only read <strong>the folders you explicitly pick in Android's own folder
+picker</strong> and never looks anywhere else. What it shows there is kept apart from the
+OneDrive index, tags and albums, and is never sent to the developer.
+</p>
+
+<h2>Advertising</h2>
+<p>
+So that it can be free to use, the Android version of the app
+<strong>shows ads through Google AdMob</strong>. To serve ads, count impressions and detect
+invalid clicks, AdMob may collect information including the
+<strong>Advertising ID</strong>. That information is collected and used by Google;
+the developer does not receive it.
+</p>
+<ul>
+  <li>See <a href="https://policies.google.com/technologies/partner-sites">How Google uses information from sites or apps that use our services</a>.</li>
+  <li>You can reset or delete your Advertising ID under Settings &rarr; Privacy &rarr; Ads on Android.</li>
+  <li>If you buy <strong>ad removal</strong> in the app, ads are no longer shown and the Advertising ID is no longer used.</li>
+</ul>
+<p>
+<strong>The contents and names of your OneDrive files are never used to select or target ads.</strong>
+</p>
+
+<h2>Purchases</h2>
+<p>
+Ad removal is a one-time purchase through Google Play. Google Play handles the payment;
+the developer never receives your card number or other payment details. The record of your
+purchase is stored in the app-specific folder in your OneDrive so that the same
+entitlement works on your other devices.
+</p>
+
+<h2>Analytics</h2>
+<p>
+The app does not include any third-party analytics tool or crash reporting.
+</p>
+
+<h2>Device permissions</h2>
+<ul>
+  <li>Internet: to connect to OneDrive and to show ads</li>
+  <li>Advertising ID: to show ads (see "Advertising" above)</li>
+  <li>Billing (Google Play): to purchase ad removal</li>
+</ul>
+<p>
+The app does not ask for the camera, contacts, location, or access to all files on your device.
+</p>
+
+<h2>Deleting your data</h2>
+<ul>
+  <li>"Reload everything" in the app clears the local index and thumbnails.</li>
+  <li>"Manage offline files" lets you remove the files kept on the device, one by one or all at once.</li>
+  <li>When you sign out, you can choose whether to delete the data stored on this device as well.</li>
+  <li>Uninstalling the app removes all of its data from the device.</li>
+  <li>You can delete the app-specific folder in your OneDrive yourself from the OneDrive website.</li>
+</ul>
+<p>
+<strong>Uninstalling the app does not delete the files in your OneDrive.</strong>
+</p>
+
+<h2>Children</h2>
+<p>
+The app is not directed at children under 13.
+</p>
+
+<h2>Contact</h2>
+<p>
+For questions about this policy, please write to
+<a href="mailto:anesapp.support@gmail.com">anesapp.support@gmail.com</a>.
+</p>
+
+<h2>Changes to this policy</h2>
+<p>
+This policy may be revised as the law changes or as features are added to the app.
+Any important change will be announced on this page.
+</p>
+
+<footer><a href="../../en/">Craftopia</a></footer>
+</body>
+</html>

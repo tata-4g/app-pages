@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CrispView プライバシーポリシー</title>
+<link rel="alternate" hreflang="ja" href="https://craftopiaapps.com/crispview/privacy.html">
+<link rel="alternate" hreflang="en" href="https://craftopiaapps.com/crispview/en/privacy.html">
+<link rel="alternate" hreflang="x-default" href="https://craftopiaapps.com/crispview/privacy.html">
+<script>
+// 振り分けの意図と仕組みは crispnote/index.html のコメントを参照。
+// ストアから直接ここへ来る人がいるので、トップページと同じ処理を持たせる。
+//
+// ⚠️ 振り分け先の en/privacy.html は必ず用意しておくこと。無いと
+// 日本語以外のブラウザ(審査の巡回を含む)が404に落ちる。
+(function () {
+  var KEY = 'craftopia-lang';
+  var wantsJa = location.search.indexOf('lang=ja') !== -1;
+  try {
+    if (wantsJa) sessionStorage.setItem(KEY, 'ja');
+    else if (sessionStorage.getItem(KEY) === 'ja') wantsJa = true;
+  } catch (e) {
+    // プライベートモード等でsessionStorageが使えない場合はクエリだけで判断する。
+  }
+  if (wantsJa) return;
+  var primary = (navigator.languages && navigator.languages[0]) || navigator.language || '';
+  if (primary.toLowerCase().indexOf('ja') === 0) return;
+  location.replace('en/privacy.html' + location.hash);
+})();
+</script>
+<style>
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+    max-width: 680px;
+    margin: 48px auto;
+    padding: 0 20px;
+    line-height: 1.8;
+    color: #1b1b1b;
+  }
+  h1 { font-size: 1.5rem; color: #1e7d4f; }
+  h2 { font-size: 1.1rem; color: #1e7d4f; margin-top: 2em; }
+  a { color: #1a73e8; }
+  .updated { color: #666; font-size: 0.9rem; }
+  footer { margin-top: 3em; font-size: 0.85rem; color: #666; }
+  table { border-collapse: collapse; width: 100%; margin: 1em 0; }
+  th, td { border: 1px solid #ddd; padding: 8px 10px; text-align: left; font-size: 0.95rem; }
+  th { background: #f3f8f5; }
+  code { background: #f3f8f5; padding: 0.1em 0.35em; border-radius: 3px; font-size: 0.9em; }
+  /* 見た目の意図は crispnote/index.html のコメントを参照。 */
+  .lang-switch { display: flex; justify-content: flex-end; margin-bottom: 1.5em; }
+  .lang-switch > * {
+    font-size: 0.85rem;
+    padding: 0.35em 0.9em;
+    border: 1px solid #1e7d4f;
+    line-height: 1.4;
+    text-decoration: none;
+  }
+  .lang-switch > :first-child { border-radius: 6px 0 0 6px; }
+  .lang-switch > :last-child { border-radius: 0 6px 6px 0; border-left: none; }
+  .lang-switch .current { background: #1e7d4f; color: #fff; font-weight: bold; }
+  .lang-switch a { color: #1e7d4f; background: #fff; }
+  .lang-switch a:hover { background: #eaf4ee; }
+</style>
+</head>
+<body>
+<nav class="lang-switch" aria-label="言語 / Language">
+  <span class="current">日本語</span>
+  <a href="en/privacy.html">English</a>
+</nav>
+<h1>CrispView プライバシーポリシー</h1>
+<p class="updated">最終更新日: 2026年9月5日</p>
+
+<p>
+CrispView(以下「本アプリ」)は、個人開発者 Craftopia(以下「開発者」)が提供する、
+Microsoft OneDrive 上のファイルを日付ごとに見渡すためのアプリです。
+本ポリシーは、本アプリがどのような情報を扱うかを説明するものです。
+</p>
+
+<h2>基本方針(サーバーレス設計)</h2>
+<p>
+本アプリは開発者が管理するサーバーを持ちません。ユーザーのファイルは、
+本アプリの画面に表示するために<strong>ユーザーの端末と Microsoft OneDrive の間で直接
+やり取りされる</strong>だけで、開発者を経由することはありません。
+開発者がユーザーのファイルの内容を見たり、取得したりすることはできません。
+</p>
+
+<h2>OneDrive に対して求める権限</h2>
+<p>
+本アプリは、サインイン時に次の権限を求めます。
+</p>
+<table>
+<tr><th>権限</th><th>何のために使うか</th></tr>
+<tr>
+  <td><code>Files.ReadWrite</code></td>
+  <td>
+    OneDrive 上のファイルの一覧・サムネイル・本文の取得と、アプリ内から行う
+    名前の変更・移動・削除・アップロード・共有リンクの作成のため。
+    <strong>本アプリは「置いた場所を問わず、すべての種類のファイルを日付順に並べる」ことを
+    目的としている</strong>ため、特定のフォルダに限定した権限では成立しません。
+  </td>
+</tr>
+<tr>
+  <td><code>Files.ReadWrite.AppFolder</code></td>
+  <td>
+    ユーザーが付けたタグ・アルバム・ピン止め・日付の手直し・非表示フォルダの設定・
+    購入の記録を、OneDrive 内の<strong>本アプリ専用フォルダ</strong>に保存するため
+    (複数の端末で同じ設定を使えるようにするためのものです)。
+  </td>
+</tr>
+<tr>
+  <td><code>offline_access</code></td>
+  <td>アプリを開き直すたびにサインインし直さずに済むようにするため。</td>
+</tr>
+</table>
+<p>
+<strong>他人から共有されたファイルにアクセスする権限
+(<code>Files.ReadWrite.All</code>)は求めません。</strong>
+Microsoft アカウントの利用には Microsoft のプライバシーポリシーも適用されます
+(<a href="https://privacy.microsoft.com/ja-jp/privacystatement">Microsoft プライバシーステートメント</a>)。
+</p>
+
+<h2>端末内に保存する情報</h2>
+<table>
+<tr><th>情報</th><th>扱い</th></tr>
+<tr>
+  <td>ファイルの索引(名前・日付・サイズ・拡張子・OneDrive 上の場所)</td>
+  <td>
+    オフラインでも一覧を表示し、毎回通信せずに済ませるための控えです。
+    端末内のデータベースにのみ保存され、開発者には送信されません。
+  </td>
+</tr>
+<tr>
+  <td>サムネイル画像</td>
+  <td>端末内にのみ保存(表示を速くするためのキャッシュ)。</td>
+</tr>
+<tr>
+  <td>「オフラインで表示可能にする」で選んだファイルの原本</td>
+  <td>ユーザーが選んだものだけを端末内に保存します。アプリ内でいつでも解除・削除できます。</td>
+</tr>
+<tr>
+  <td>Microsoft アカウントのサインイン情報(トークン)</td>
+  <td>端末内に安全に保管し、OneDrive への接続のためだけに使用します。開発者のサーバーには送信されません。</td>
+</tr>
+<tr>
+  <td>非表示フォルダに設定したパスワード</td>
+  <td>
+    端末内に、元に戻せない形(ハッシュ)にしてのみ保存します。
+    <strong>この機能は同席した人の目に触れないようにするためのもので、
+    ファイル自体を暗号化するものではありません。</strong>
+  </td>
+</tr>
+</table>
+
+<h2>この端末のフォルダの閲覧</h2>
+<p>
+本アプリには、OneDrive とは別に、この端末の中のフォルダを同じ形で表示する機能があります。
+表示できるのは<strong>ユーザーが Android の標準のフォルダ選択画面で明示的に選んだフォルダだけ</strong>で、
+それ以外の場所を読むことはありません。この機能で表示した内容は、
+OneDrive の索引・タグ・アルバムとは混ざらず、開発者にも送信されません。
+</p>
+
+<h2>広告について</h2>
+<p>
+Android 版の本アプリは、無料でお使いいただくために <strong>Google AdMob による広告を表示します</strong>。
+AdMob は広告の配信・表示回数の計測・不正なクリックの検出のために、
+<strong>広告 ID(Advertising ID)</strong>などの情報を取得することがあります。これらは Google が
+取得・利用するもので、開発者がその内容を受け取ることはありません。
+</p>
+<ul>
+  <li>詳しくは <a href="https://policies.google.com/technologies/partner-sites">Google のポリシーと規約</a> をご覧ください。</li>
+  <li>広告 ID は Android の「設定 → プライバシー → 広告」からリセット・削除できます。</li>
+  <li>アプリ内で<strong>広告の非表示(有料)</strong>をご購入いただくと、広告の表示と広告 ID の利用は行われなくなります。</li>
+</ul>
+<p>
+<strong>OneDrive から取得したファイルの内容やファイル名が、広告の選択・配信に使われることはありません。</strong>
+</p>
+
+<h2>購入について</h2>
+<p>
+広告の非表示は Google Play を通じた買い切りの商品です。決済は Google Play が処理し、
+開発者がクレジットカード番号などの支払い情報を受け取ることはありません。
+購入した記録は、複数の端末で同じ権利を使えるように、OneDrive 内の本アプリ専用フォルダに保存されます。
+</p>
+
+<h2>解析ツールについて</h2>
+<p>
+本アプリは、利用状況を収集する第三者製の解析(アナリティクス)ツールや、
+クラッシュレポートの送信機能を組み込んでいません。
+</p>
+
+<h2>端末の権限</h2>
+<ul>
+  <li>インターネット: OneDrive への接続と広告の表示のため</li>
+  <li>広告 ID: 広告の表示のため(上記「広告について」を参照)</li>
+  <li>課金(Google Play): 広告の非表示を購入するため</li>
+</ul>
+<p>
+本アプリはカメラ・連絡先・位置情報・端末内のすべてのファイルへのアクセスを求めません。
+</p>
+
+<h2>データの削除</h2>
+<ul>
+  <li>アプリ内の「すべて読み込み直す」で、端末内の索引とサムネイルを消せます。</li>
+  <li>「オフライン表示の管理」で、端末に保存した原本を個別に、またはまとめて消せます。</li>
+  <li>サインアウト時に、この端末に保存したデータを一緒に消すかどうかを選べます。</li>
+  <li>アプリをアンインストールすると、端末内のデータはすべて削除されます。</li>
+  <li>OneDrive 内の本アプリ専用フォルダは、OneDrive のウェブサイトからユーザー自身で削除できます。</li>
+</ul>
+<p>
+なお、<strong>本アプリをアンインストールしても OneDrive 上のファイル自体は消えません。</strong>
+</p>
+
+<h2>お子様の利用について</h2>
+<p>
+本アプリは 13 歳未満のお子様を対象としていません。
+</p>
+
+<h2>お問い合わせ</h2>
+<p>
+本ポリシーに関するお問い合わせは
+<a href="mailto:anesapp.support@gmail.com">anesapp.support@gmail.com</a> までお願いします。
+</p>
+
+<h2>ポリシーの変更</h2>
+<p>
+本ポリシーの内容は、法令の変更やアプリの機能追加に応じて改定することがあります。
+重要な変更がある場合は、本ページ上でお知らせします。
+</p>
+
+<footer><a href="../">Craftopia</a></footer>
+</body>
+</html>
