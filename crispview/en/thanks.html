@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thank you for your purchase - CrispView</title>
+<link rel="icon" href="../../assets/icon-crispview.png">
+<meta name="robots" content="noindex">
+<!--
+  ⚠️ このページには言語振り分けスクリプトを入れないこと。
+  購入した決済画面の言語に合わせて呼ばれる(英語ページのボタンがここを successUrl に渡す)。
+  振り分けを入れると、英語で買った人が日本語のページへ飛ばされうる。
+-->
+<style>
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    max-width: 640px;
+    margin: 48px auto;
+    padding: 0 20px;
+    line-height: 1.8;
+    color: #1b1b1b;
+  }
+  h1 { font-size: 1.5rem; color: #1e7d4f; }
+  h2 { font-size: 1.1rem; color: #1e7d4f; margin-top: 2em; }
+  a { color: #1a73e8; }
+  ul, ol { padding-left: 1.3em; }
+  li { margin-bottom: 0.5em; }
+  .note { font-size: 0.9rem; color: #555; }
+  .panel {
+    background: #f3f8f5;
+    border-left: 3px solid #1e7d4f;
+    padding: 1em 1.2em;
+    margin: 1.5em 0;
+  }
+  footer { margin-top: 3em; font-size: 0.85rem; color: #666; }
+  /* ⚠️ The key must wrap so all of it is visible - a single long line is hard to select. */
+  #key-box { border: 1px solid #cfcfc7; border-radius: 8px; padding: 16px; margin: 24px 0; }
+  #key-box h2 { margin-top: 0; }
+  #key-value {
+    width: 100%; min-height: 6.5em; padding: 10px; box-sizing: border-box;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 14px; line-height: 1.5; word-break: break-all; resize: vertical;
+  }
+  #key-copy { margin-top: 10px; }
+</style>
+</head>
+<body>
+<h1>Thank you for your purchase</h1>
+
+<div class="panel">
+<strong>Your licence key appears below.</strong><br>
+The same key is emailed to the address you entered at checkout.
+<strong>Email can end up in the spam folder</strong>, so it is safest to copy it from this page.
+</div>
+
+<div class="panel" id="key-box" hidden>
+<h2>Licence key</h2>
+<p id="key-status">Issuing your key. This takes a few seconds...</p>
+<textarea id="key-value" readonly spellcheck="false" aria-label="Licence key"></textarea>
+<p><button type="button" id="key-copy" data-done="Copied" hidden>Copy</button></p>
+<p class="note">The same key is also emailed to you. <strong>It can end up in the spam
+folder</strong>, so it is safest to copy it from here.</p>
+</div>
+
+<h2>How to enter it</h2>
+<ol>
+  <li>Open CrispView and choose <strong>Purchase</strong> from the <strong>&#8942;</strong> menu</li>
+  <li>Paste the key into <strong>"Already have a licence key?"</strong></li>
+  <li>When it changes to "Purchased", you are done - the ads stop showing</li>
+</ol>
+<p class="note">
+<strong>If you are signed in to OneDrive, your other devices pick this up automatically.</strong>
+The licence is shared through your own OneDrive app folder, so entering it on one device is
+enough; the rest catch up at their next refresh.
+</p>
+
+<h2>If it does not arrive</h2>
+<ul>
+  <li><strong>Please check your spam folder first.</strong> The mail is sent by an individual
+      developer and is sometimes filtered</li>
+  <li>If nothing arrives after a few minutes, contact
+      <a href="mailto:anesapp.support@gmail.com">anesapp.support@gmail.com</a>.
+      Tell us the name or email address you used and we will look it up right away</li>
+</ul>
+
+<p class="note">
+Your receipt is sent automatically by Paddle, who handle the payment
+(separately from the licence key email).
+</p>
+
+<footer><a href="./">CrispView</a> / <a href="privacy.html">Privacy notice</a> / <a href="../../en/">Craftopia</a></footer>
+
+<!-- ⚠️ 仕組みと注意は日本語版 ../thanks.html のコメントを参照(同じもの)。 -->
+<script>
+(function () {
+  var ENDPOINT = 'https://crispnote-license.crispnote-license-worker.workers.dev/key';
+  var box = document.getElementById('key-box');
+  var out = document.getElementById('key-value');
+  var msg = document.getElementById('key-status');
+  var copy = document.getElementById('key-copy');
+  if (!box || !out || !msg) return;
+
+  var txn = null;
+  try {
+    txn = sessionStorage.getItem('crispview-txn');
+  } catch (e) {
+    // Fall back to the emailed key.
+  }
+  if (!txn) txn = new URLSearchParams(location.search).get('_ptxn');
+  if (!txn) return;
+
+  box.hidden = false;
+
+  var tries = 0;
+  var MAX = 20;      // 20 attempts x 3s = up to 60s
+  var WAIT = 3000;
+
+  function attempt() {
+    tries++;
+    fetch(ENDPOINT + '?txn=' + encodeURIComponent(txn))
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (data) {
+        if (data && data.license) {
+          out.value = data.license;
+          msg.hidden = true;
+          if (copy) copy.hidden = false;
+          return;
+        }
+        if (tries < MAX) { setTimeout(attempt, WAIT); return; }
+        box.hidden = true;
+      })
+      .catch(function () {
+        if (tries < MAX) { setTimeout(attempt, WAIT); return; }
+        box.hidden = true;
+      });
+  }
+  attempt();
+
+  if (copy) {
+    copy.addEventListener('click', function () {
+      out.select();
+      try {
+        navigator.clipboard.writeText(out.value);
+        copy.textContent = copy.getAttribute('data-done');
+      } catch (e) {
+        document.execCommand('copy');
+        copy.textContent = copy.getAttribute('data-done');
+      }
+    });
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ご購入ありがとうございます - CrispView</title>
+<link rel="icon" href="../assets/icon-crispview.png">
+<meta name="robots" content="noindex">
+<!--
+  ⚠️ このページには言語振り分けスクリプトを入れないこと。
+  他のページ(index.html / terms.html / privacy.html)はブラウザの言語で日英を
+  振り分けるが、ここは**購入した決済画面の言語に合わせて呼ばれる**
+  (日本語ページの購入ボタンはこのページを、英語ページのボタンは en/thanks.html を
+  successUrl に渡す)。振り分けを入れると、日本語で買った人が英語のページへ飛ばされる。
+-->
+<style>
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+    max-width: 640px;
+    margin: 48px auto;
+    padding: 0 20px;
+    line-height: 1.8;
+    color: #1b1b1b;
+  }
+  h1 { font-size: 1.5rem; color: #1e7d4f; }
+  h2 { font-size: 1.1rem; color: #1e7d4f; margin-top: 2em; }
+  a { color: #1a73e8; }
+  ul { padding-left: 1.3em; }
+  li { margin-bottom: 0.5em; }
+  .note { font-size: 0.9rem; color: #555; }
+  .panel {
+    background: #f3f8f5;
+    border-left: 3px solid #1e7d4f;
+    padding: 1em 1.2em;
+    margin: 1.5em 0;
+  }
+  footer { margin-top: 3em; font-size: 0.85rem; color: #666; }
+  /* 購入直後に出すライセンスキーの枠。⚠️ キーは折り返して全体が見えること
+     (1行で横に溢れると、選択してコピーするのが難しくなる)。 */
+  #key-box { border: 1px solid #cfcfc7; border-radius: 8px; padding: 16px; margin: 24px 0; }
+  #key-box h2 { margin-top: 0; }
+  #key-value {
+    width: 100%; min-height: 6.5em; padding: 10px; box-sizing: border-box;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 14px; line-height: 1.5; word-break: break-all; resize: vertical;
+  }
+  #key-copy { margin-top: 10px; }
+</style>
+</head>
+<body>
+<h1>ご購入ありがとうございます</h1>
+
+<div class="panel">
+<strong>ライセンスキーをこの下に表示します。</strong><br>
+同じキーは、ご購入時にご入力いただいたメールアドレスあてにもお送りしています。
+<strong>メールは迷惑メールフォルダに入ることがあります</strong>ので、
+このページで控えておくと確実です。
+</div>
+
+<div class="panel" id="key-box" hidden>
+<h2>ライセンスキー</h2>
+<p id="key-status">発行しています。数秒お待ちください…</p>
+<textarea id="key-value" readonly spellcheck="false" aria-label="ライセンスキー"></textarea>
+<p><button type="button" id="key-copy" data-done="コピーしました" hidden>コピーする</button></p>
+<p class="note">同じキーをメールでもお送りしています。<strong>迷惑メールフォルダに入ることがあります</strong>ので、
+このページで控えておくと確実です。</p>
+</div>
+
+<h2>キーの入れ方</h2>
+<ol>
+  <li>CrispViewを開き、右上の <strong>⋮</strong> から<strong>「購入」</strong>を選びます</li>
+  <li><strong>「ライセンスキーをお持ちの方」</strong>の欄に、上のキーを貼り付けます</li>
+  <li>「購入済みです」に変われば完了です。広告が表示されなくなります</li>
+</ol>
+<p class="note">
+<strong>OneDriveにサインインしていれば、他の端末にも自動的に反映されます。</strong>
+権利はお使いのOneDriveのアプリ専用フォルダで共有されるため、
+1台で入力すれば、残りの端末は次回の更新で追いつきます。
+</p>
+
+<h2>届かないときは</h2>
+<ul>
+  <li><strong>迷惑メールフォルダをご確認ください。</strong>個人から送るメールのため、
+      振り分けられていることがあります</li>
+  <li>数分待っても届かない場合は、お手数ですが
+      <a href="mailto:anesapp.support@gmail.com">anesapp.support@gmail.com</a>
+      までご連絡ください。ご購入時のお名前かメールアドレスをお知らせいただければ、すぐにお調べします</li>
+</ul>
+
+<p class="note">
+お支払いの領収書は、決済を担当する Paddle から自動で届きます
+（ライセンスキーのメールとは別便です）。
+</p>
+
+<footer><a href="./">CrispView</a> / <a href="privacy.html">プライバシーポリシー</a> / <a href="../">Craftopia</a></footer>
+
+<!-- ⚠️ 購入直後にライセンスキーをこの場で表示する。メールだけに頼ると、
+     迷惑メールに振り分けられたときに「買ったのに届かない」になる
+     (CrispNoteが最初の実購入で実際に踏んだ。認証は全部passで、弾いたのは
+     コンテンツと評判のフィルタだった)。
+     ⚠️ メールの送信はやめないこと——後から見返せる利点があるので二本立てにする。
+     取引IDは購入ページの checkout.completed コールバックが sessionStorage に置く。
+     Workerが発行を終えるまで数秒かかるので、少し待って何度か取りに行く。 -->
+<script>
+(function () {
+  // ⚠️ CrispNoteと同じWorkerを使う(両対応にしてある)。取引IDから
+  // 発行済みのキーを引くだけで、どちらの製品かはWorker側が価格IDで判断する。
+  var ENDPOINT = 'https://crispnote-license.crispnote-license-worker.workers.dev/key';
+  var box = document.getElementById('key-box');
+  var out = document.getElementById('key-value');
+  var msg = document.getElementById('key-status');
+  var copy = document.getElementById('key-copy');
+  if (!box || !out || !msg) return;
+
+  var txn = null;
+  try {
+    // ⚠️ CrispNoteとは別のキー名。同じ名前にすると、続けて両方を買った人の
+    // 完了ページが取り違える。
+    txn = sessionStorage.getItem('crispview-txn');
+  } catch (e) {
+    // 保存できていなければメールを見てもらう(既定の案内のまま)。
+  }
+  // 保険。Paddleがリダイレクト先に付けることがあるが、公式には未記載。
+  if (!txn) txn = new URLSearchParams(location.search).get('_ptxn');
+  if (!txn) return;
+
+  box.hidden = false;
+
+  // ⚠️ 諦めるまで待つこと。Workerはwebhookを受けてから発行するので、
+  // 完了ページの表示より少し遅れて用意される。
+  var tries = 0;
+  var MAX = 20;      // 20回 × 3秒 = 最大60秒
+  var WAIT = 3000;
+
+  function attempt() {
+    tries++;
+    fetch(ENDPOINT + '?txn=' + encodeURIComponent(txn))
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (data) {
+        if (data && data.license) {
+          out.value = data.license;
+          msg.hidden = true;
+          if (copy) copy.hidden = false;
+          return;
+        }
+        if (tries < MAX) { setTimeout(attempt, WAIT); return; }
+        box.hidden = true;   // 出せないときは黙って引っ込め、メールの案内に委ねる
+      })
+      .catch(function () {
+        if (tries < MAX) { setTimeout(attempt, WAIT); return; }
+        box.hidden = true;
+      });
+  }
+  attempt();
+
+  if (copy) {
+    copy.addEventListener('click', function () {
+      out.select();
+      try {
+        navigator.clipboard.writeText(out.value);
+        copy.textContent = copy.getAttribute('data-done');
+      } catch (e) {
+        document.execCommand('copy');
+        copy.textContent = copy.getAttribute('data-done');
+      }
+    });
+  }
+})();
+</script>
+</body>
+</html>

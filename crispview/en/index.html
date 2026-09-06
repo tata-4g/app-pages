@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CrispView</title>
+<meta name="description" content="Browse your OneDrive files by date, the way a photo app does. Photos, videos, PDFs, Word, Excel and Markdown all share one timeline - sorted by when they are from, not where they live.">
+<link rel="icon" href="../../assets/icon-crispview.png">
+<link rel="alternate" hreflang="ja" href="https://craftopiaapps.com/crispview/">
+<link rel="alternate" hreflang="en" href="https://craftopiaapps.com/crispview/en/">
+<link rel="alternate" hreflang="x-default" href="https://craftopiaapps.com/crispview/">
+<style>
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    max-width: 640px;
+    margin: 48px auto;
+    padding: 0 20px;
+    line-height: 1.8;
+    color: #1b1b1b;
+  }
+  h1 { font-size: 1.8rem; color: #1e7d4f; margin-bottom: 0.2em; }
+  .tagline { color: #555; margin-top: 0; }
+  /* The icon already has rounded corners baked in - do not add border-radius. */
+  .app-head { display: flex; align-items: center; gap: 16px; }
+  .app-head img { width: 72px; height: 72px; flex-shrink: 0; }
+  .app-head h1 { margin: 0 0 0.1em; }
+  .app-head .tagline { margin: 0; }
+  .lead { margin-top: 1.2em; }
+  h2 { font-size: 1.15rem; color: #1e7d4f; margin-top: 2em; }
+  ul { padding-left: 1.3em; }
+  li { margin-bottom: 0.5em; }
+  a { color: #1a73e8; }
+  footer { margin-top: 3em; font-size: 0.85rem; color: #666; }
+  .lang-switch { display: flex; justify-content: flex-end; margin-bottom: 1.5em; }
+  .lang-switch > * {
+    font-size: 0.85rem;
+    padding: 0.35em 0.9em;
+    border: 1px solid #1e7d4f;
+    line-height: 1.4;
+    text-decoration: none;
+  }
+  .lang-switch > :first-child { border-radius: 6px 0 0 6px; }
+  .lang-switch > :last-child { border-radius: 0 6px 6px 0; border-left: none; }
+  .lang-switch .current { background: #1e7d4f; color: #fff; font-weight: bold; }
+  .lang-switch a { color: #1e7d4f; background: #fff; }
+  .lang-switch a:hover { background: #eaf4ee; }
+  .note { font-size: 0.9rem; color: #555; }
+  .cta {
+    display: inline-block;
+    background: #1e7d4f;
+    color: #fff;
+    text-decoration: none;
+    padding: 0.6em 1.4em;
+    border-radius: 6px;
+    font-weight: bold;
+  }
+</style>
+</head>
+<body>
+<!-- ⚠️ ?lang=ja は必須。付けないと日本語ページの振り分けJSがここへ引き戻す。 -->
+<nav class="lang-switch" aria-label="言語 / Language">
+  <a href="../index.html?lang=ja">日本語</a>
+  <span class="current">English</span>
+</nav>
+<header class="app-head">
+  <img src="../../assets/icon-crispview.png" alt="CrispView icon" width="72" height="72">
+  <div>
+    <h1>CrispView</h1>
+    <p class="tagline">by Craftopia</p>
+  </div>
+</header>
+<p class="tagline lead">Browse your OneDrive files by date, the way a photo app does</p>
+
+<p>
+CrispView shows the files in your OneDrive as a <strong>date-by-date grid of thumbnails</strong>.
+Not just photos and videos - PDFs, Word, Excel and Markdown share the same timeline.
+The whole point is that you can find things by <strong>when they are from</strong>,
+not by where you happened to put them.
+</p>
+
+<h2>What it does</h2>
+<ul>
+  <li><strong>Photos, videos and documents on one timeline.</strong>
+      This is not a gallery that only picks up images</li>
+  <li><strong>Hide the folders you do not want to see.</strong> Files that other apps
+      leave behind, or working folders, can be excluded by folder or by file</li>
+  <li><strong>Browsing, search, tags and albums all run on your device.</strong>
+      Once loaded, the timeline works offline and scrolling never waits on the network</li>
+  <li>Tags, albums, pins and date corrections are stored in
+      <strong>your own OneDrive app folder</strong>, so they line up across your devices.
+      Nothing passes through a server of ours</li>
+  <li>Search <strong>inside</strong> files as well as by name (PDF, Office, plain text)</li>
+  <li>Rename, move, delete, share links, upload - and restore from the recycle bin</li>
+  <li><strong>Folders on the device itself</strong> can be browsed too, as a separate view
+      that never mixes with the OneDrive index</li>
+  <li>A <strong>home screen widget</strong> (Android) and <strong>offline copies</strong></li>
+</ul>
+
+<!-- ⚠️ 公開の状態に合わせてここを書き換えること(2026-09-06時点はどれも準備中)。
+     日本語版 ../index.html の同じ箇所と対で直すこと。 -->
+<h2>Where to get it</h2>
+<ul>
+  <li><strong>Android</strong> - coming soon to Google Play</li>
+  <li><strong>Windows</strong> - coming soon to the Microsoft Store</li>
+  <li><strong>Browser</strong> - coming soon</li>
+</ul>
+
+<h2 id="buy">Remove the ads (500 JPY)</h2>
+<p>
+CrispView is <strong>free to use</strong>; the browser and Android versions show ads.
+A <strong>one-time 500 JPY licence</strong> removes them. There is no subscription and
+no further cost - you pay once and it does not expire.
+</p>
+<!-- ⚠️ Paddleの商品と価格ができるまで購入ボタンを出さない(日本語版と同じ)。
+     価格IDを ../index.html の script に入れたら、この段落を
+     <p><a class="cta" href="#" onclick="return crispviewBuy('en');">Remove the ads (500 JPY)</a></p>
+     に差し替えること。 -->
+<p class="note">
+Purchases are not open yet. Please check back shortly.
+</p>
+<p class="note" id="buy-fallback" hidden>
+The checkout could not be opened. Please contact
+<a href="mailto:anesapp.support@gmail.com">anesapp.support@gmail.com</a>.
+</p>
+<ul>
+  <li><strong>Sign in with the same Microsoft account and the ads are gone on both the
+      browser and Android versions.</strong> The licence is shared through your own
+      OneDrive app folder, so activating it on one device is enough - the others catch up
+      on their own</li>
+  <li>Your licence key is <strong>emailed to you within seconds</strong> of the purchase
+      (issued automatically). If it does not arrive, please check your spam folder</li>
+  <li><strong>Fully refundable within 14 days of purchase, for any reason.</strong>
+      There are no exceptions or conditions
+      (<a href="terms.html#refund">refund policy</a>)</li>
+  <li>The licence only removes the ads; no feature is held back.
+      <strong>Everything works on the free version too</strong></li>
+</ul>
+<!-- ⚠️ 「この500円が何を含むのか」を必ず書いておくこと(日本語版と同じ理由)。 -->
+<p class="note">
+What you buy here is <strong>the ad-free licence</strong>.
+<strong>The Windows version has no ads to begin with</strong> and is sold separately as a
+one-time 500 JPY purchase on the Microsoft Store - it is not included in this licence.<br>
+On Android you can also remove the ads through an in-app purchase on Google Play, at the
+same price. Either way, the result carries over to your other devices as described above.<br>
+If you are buying from outside Japan, the checkout will show the amount in your local
+currency, including any local tax.
+</p>
+
+<h2>Privacy</h2>
+<p>
+CrispView <strong>has no server of its own</strong>. Your files move between your device and
+Microsoft OneDrive, and nowhere else. See the
+<a href="privacy.html">privacy notice</a> for details.
+</p>
+
+<h2>Contact</h2>
+<p>
+Feedback and bug reports are welcome at
+<a href="mailto:anesapp.support@gmail.com">anesapp.support@gmail.com</a>.
+</p>
+
+<!-- ⚠️ Terms, refund policy and privacy notice must all be reachable from the page that
+     starts the checkout - this is a requirement of Paddle's domain approval. -->
+<footer>
+<a href="terms.html">Terms of service</a> /
+<a href="terms.html#refund">Refund policy</a> /
+<a href="privacy.html">Privacy notice</a> /
+<a href="../../en/">Craftopia</a>
+</footer>
+
+<!--
+  ⚠️ Paddle.js is loaded here even before the buy button exists: Paddle's domain approval
+  for default payment links requires Paddle.js to be present on the page.
+  ⚠️ The token is a client-side token and is meant to be public (like a Stripe publishable
+  key). Never put a secret API key (apikey_...) here.
+  ⚠️ 価格IDは日本語版 ../index.html と同じものを入れること(商品は1つ)。
+-->
+<script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
+<script>
+(function () {
+  var PADDLE_TOKEN = 'live_94fcd0dbf76ba1e90ecca1c1c6f';
+  var PRICE_ID = '';
+  var SUCCESS_URL = 'https://craftopiaapps.com/crispview/en/thanks.html';
+  var ready = false;
+  try {
+    Paddle.Initialize({
+      token: PADDLE_TOKEN,
+      eventCallback: function (ev) {
+        if (ev && ev.name === 'checkout.completed') {
+          try {
+            var id = ev.data && (ev.data.transaction_id || ev.data.id);
+            if (id) sessionStorage.setItem('crispview-txn', id);
+          } catch (e) {
+            // Nothing to do - the key is emailed as well.
+          }
+        }
+      },
+    });
+    ready = true;
+  } catch (e) {
+    // Keep the rest of the page working; explain when the button is pressed.
+  }
+  window.crispviewBuy = function (locale) {
+    try {
+      if (!ready || !PRICE_ID) { throw new Error('paddle not ready'); }
+      Paddle.Checkout.open({
+        items: [{ priceId: PRICE_ID, quantity: 1 }],
+        settings: { locale: locale, successUrl: SUCCESS_URL }
+      });
+    } catch (e) {
+      var fallback = document.getElementById('buy-fallback');
+      if (fallback) { fallback.hidden = false; }
+    }
+    return false;
+  };
+})();
+</script>
+</body>
+</html>
